@@ -89,7 +89,10 @@ Login
   Input text   id=inputEmail1         ${USERS.users['${username}'].login}
   Input text   id=inputPassword1      ${USERS.users['${username}'].password}
   Click Element   css=.login-btn
-  Wait Until Page Contains  Особистий кабінет   60
+  Sleep    2    Ждем авторизацию
+  Wait Until Keyword Succeeds   4 x   10 s   Run Keywords
+  ...   Element Should Be Visible   css=.my-cabinet
+  ...   AND   Reload Page
 
 Створити тендер
   [Arguments]  @{ARGUMENTS}
@@ -151,11 +154,11 @@ Login
    ${action_id}=   Catenate   SEPARATOR=   ${COMMINNEX_LOT_ID}  _publish_lot
    Клацнути по випадаючому списку   ${drop_id}
    Виконати дію   ${action_id}
-   Wait Until Page Contains   Запис знаходиться в стані очікування публікації в ЦБД   60
+   Wait Until Page Contains   Запис знаходиться в стані очікування публікації в ЦБД   120
    Перевірити та сховати повідомлення
    Wait Until Element Is Visible   xpath=//a[contains(@href,'${COMMINNEX_LOT_ID}')]   15
    Click Link   xpath=//a[contains(@href,'${COMMINNEX_LOT_ID}')]
-   Wait Until Page Contains   Ідентифікатор аукціону   30
+   Wait Until Page Contains   Ідентифікатор аукціону   15
    ${ua_id}=   Get Text  id=auid
    [return]   ${ua_id}
 
@@ -283,7 +286,7 @@ Set Multi Ids
   ${inputID}=   convert_comminnex_string_to_common_string   ${documentType}
   Приєднати документ    id=${inputID}   ${filepath}
   Click Element  xpath=//input[@type="submit"]
-  Wait Until Page Contains   Збережено   20
+  Wait Until Page Contains   Збережено   60
   Перевірити та сховати повідомлення
 
 Отримати кількість предметів в тендері
@@ -306,7 +309,7 @@ Set Multi Ids
     Wait Until Element Is Visible   id=fileInput13   15
     Приєднати документ    id=fileInput13    ${ARGUMENTS[1]}
     Click Element  xpath=//input[@type="submit"]
-    Wait Until Page Contains   Збережено   20
+    Wait Until Page Contains   Збережено   60
     Перевірити та сховати повідомлення
 
 Додати фінкомпанію
@@ -437,7 +440,7 @@ Set Multi Ids
   Run Keyword If    "${visible}" == "True"   Відправлення заявки на участь
   Wait Until Element Is Visible   css=.bid-skas   10
   Click Element   css=.bid-skas
-  Wait Until Page Contains   Пропозиція скасована   15
+  Wait Until Page Contains   Пропозиція скасована   45
   Перевірити та сховати повідомлення
 
 Зайти в розділ купую
@@ -537,7 +540,7 @@ Set Multi Ids
   Input text                         id=OpQuestion_op_title                 ${title}
   Input text                         id=OpQuestion_op_description           ${description}
   Click Element                      xpath=//input[@type='submit']
-  Wait Until Page Contains    Питання успішно додане    50
+  Wait Until Page Contains    Питання успішно додане    120
   Перевірити та сховати повідомлення
 
 Задати запитання на предмет
@@ -559,7 +562,7 @@ Set Multi Ids
   Input text                         id=OpQuestion_op_title                 ${title}
   Input text                         id=OpQuestion_op_description           ${description}
   Click Element                      xpath=//input[@type='submit']
-  Wait Until Page Contains    Питання успішно додане    40
+  Wait Until Page Contains    Питання успішно додане    120
   Перевірити та сховати повідомлення
 
 Відповісти на запитання
@@ -579,7 +582,7 @@ Set Multi Ids
   Wait Until Element Is Visible   id=OpQuestion_op_answer   10
   Input text   id=OpQuestion_op_answer   ${answer}
   Click Element   xpath=//input[@type='submit']
-  Wait Until page Contains   Відповідь успішно опублікована    40
+  Wait Until page Contains   Відповідь успішно опублікована    120
   Перевірити та сховати повідомлення
 
 Внести зміни в тендер
@@ -867,7 +870,7 @@ Set Multi Ids
   Wait Until Element Is Visible   id=fileInput20   10
   Приєднати документ   id=fileInput20   ${ARGUMENTS[2]}
   Click Element   xpath=//input[@type="submit"]
-  Wait Until Page Contains   Протокол успішно завантажений в с-му   10
+  Wait Until Page Contains   Протокол успішно завантажений в с-му   45
   Перевірити та сховати повідомлення
 
 Клацнути по випадаючому списку
@@ -1118,7 +1121,7 @@ Set Multi Ids
   Виконати дію   ${action_id}
   Sleep    5   Ждем отображение модального окна
   Click Element   xpath=//input[@type="submit"]
-  Wait Until Page Contains    Рішення успішно скасоване   20
+  Wait Until Page Contains    Рішення успішно скасоване   45
   Перевірити та сховати повідомлення
 
 Отримати кількість документів в тендері
@@ -1172,7 +1175,7 @@ Set Multi Ids
   Input Text  id=OpAward_op_title   Дискваліфікація
   Input Text  id=OpAward_op_description   ${description}
   Click Element   xpath=//input[@type="submit"]
-  Wait Until Page Contains    Кандидат дискваліфікований. Зачекайте синхронізації   30
+  Wait Until Page Contains    Кандидат дискваліфікований. Зачекайте синхронізації   50
   Перевірити та сховати повідомлення
 
 Завантажити угоду до тендера
@@ -1203,5 +1206,5 @@ Set Multi Ids
   Input Text    id=OpContract_op_contract_number    111211111-21102121
   Input Text    id=datetimepicker5    ${date}
   Click Element   xpath=//input[@class="btn btn-primary bnt-lg pull-right"]
-  Wait Until Page Contains   Договір знаходиться в стані очікування публікації в ЦБД   15
+  Wait Until Page Contains   Договір знаходиться в стані очікування публікації в ЦБД   45
   Перевірити та сховати повідомлення
